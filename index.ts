@@ -26,6 +26,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 			flask = item
 			AUseFlask.isBackpack = item.ItemSlot >= 6 && item.ItemSlot <= 8
 		}
+		console.log("map items", index, item)
 	})
 
 	// const flask = inv.TotalItems.find(i => i instanceof item_flask)
