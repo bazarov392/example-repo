@@ -33,7 +33,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 	// const flask = inv.TotalItems.find(i => i instanceof item_flask)
 	AUseFlask.flask = flask
 
-	console.log("flask", AUseFlask)
+	// console.log("flask", AUseFlask)
 })
 
 EventsSDK.on("Tick", () => {
