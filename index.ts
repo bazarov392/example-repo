@@ -27,7 +27,7 @@ EventsSDK.on("Draw", () => {
 	const oneProcentHP = hero.MaxHP / 100
 
 	if (oneProcentHP * 20 >= hero.HP) {
-		UseFlaskSleeper.Sleep(140000)
+		UseFlaskSleeper.Sleep(14000)
 		console.log("use flask", new Date())
 	}
 })
