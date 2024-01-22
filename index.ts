@@ -15,6 +15,7 @@ EventsSDK.on("GameStarted", () => {
 EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
 	let flask: Nullable<item_flask>
+	console.log("total items", inv.TotalItems)
 	inv.TotalItems.map((item, index) => {
 		if (item === undefined) {
 			if (AUseFlask.freeSlot === undefined && index < 5) {
@@ -51,6 +52,7 @@ EventsSDK.on("Tick", () => {
 			} else {
 				UseFlaskSleeper.Sleep(14000)
 				hero.CastTarget(AUseFlask.flask, hero)
+				// if(AUseFlask.flask)
 			}
 		}
 	}
