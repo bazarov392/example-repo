@@ -16,6 +16,6 @@ EventsSDK.on("UnitItemsChanged", e => {
 	AUseFlask.flasks = flasks
 })
 
-EventsSDK.on("UnitPropertyChanged", e => {
+EventsSDK.on("UnitStateChanged", e => {
 	console.log("life", e)
 })
