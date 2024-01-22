@@ -1,7 +1,7 @@
 import { EventsSDK, item_flask, LocalPlayer, TickSleeper } from "github.com/octarine-public/wrapper/index"
 
 class AutoUseFlask {
-	public flask: item_flask | null = null
+	public flask: Nullable<item_flask>
 }
 const AUseFlask = new AutoUseFlask()
 const [UseFlaskSleeper] = [new TickSleeper()]
@@ -11,11 +11,9 @@ EventsSDK.on("GameStarted", () => {
 })
 
 EventsSDK.on("UnitItemsChanged", e => {
-	console.log("change inventory")
 	const inv = e.Inventory
-	const flask = inv.Items.find(i => i instanceof item_flask)
-	AUseFlask.flask = flask ? flask : null
-	console.log("flask", flask)
+	AUseFlask.flask = inv.Items.find(i => i instanceof item_flask)
+	console.log("flask", AUseFlask.flask?.IsHidden)
 })
 
 EventsSDK.on("Tick", () => {
@@ -32,7 +30,6 @@ EventsSDK.on("Tick", () => {
 		UseFlaskSleeper.Sleep(14000)
 		if (AUseFlask.flask) {
 			hero.CastTarget(AUseFlask.flask, hero)
-			console.log("use flask", new Date())
 		}
 	}
 })
