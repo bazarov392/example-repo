@@ -1,9 +1,4 @@
-import {
-	EventsSDK,
-	item_flask,
-	npc_dota_hero_night_stalker,
-	TickSleeper
-} from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_flask, LocalPlayer, TickSleeper } from "github.com/octarine-public/wrapper/index"
 
 class AutoUseFlask {
 	public flasks: item_flask[] = []
@@ -21,8 +16,14 @@ EventsSDK.on("UnitItemsChanged", e => {
 	AUseFlask.flasks = flasks
 })
 
-EventsSDK.on("UnitStateChanged", e => {
-	if (e instanceof npc_dota_hero_night_stalker) {
-		console.log(e)
+EventsSDK.on("Draw", () => {
+	const hero = LocalPlayer?.Hero
+	if (!hero) {
+		return false
+	}
+	const oneProcentHP = hero.MaxHP / 100
+
+	if (oneProcentHP * 20 >= hero.HP) {
+		console.log("use flask", new Date())
 	}
 })
