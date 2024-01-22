@@ -17,6 +17,9 @@ EventsSDK.on("UnitItemsChanged", e => {
 })
 
 EventsSDK.on("Draw", () => {
+	if (UseFlaskSleeper.Sleeping) {
+		return false
+	}
 	const hero = LocalPlayer?.Hero
 	if (!hero) {
 		return false
@@ -24,6 +27,7 @@ EventsSDK.on("Draw", () => {
 	const oneProcentHP = hero.MaxHP / 100
 
 	if (oneProcentHP * 20 >= hero.HP) {
+		UseFlaskSleeper.Sleep(140000)
 		console.log("use flask", new Date())
 	}
 })
