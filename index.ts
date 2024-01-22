@@ -16,6 +16,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
 	let flask: Nullable<item_flask>
 	inv.TotalItems.map((item, index) => {
+		console.log("item", item)
 		if (item === undefined) {
 			if (AUseFlask.freeSlot !== undefined && index < 5) {
 				AUseFlask.freeSlot = index
