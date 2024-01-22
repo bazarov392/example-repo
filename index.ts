@@ -20,6 +20,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 		if (item === undefined) {
 			if (AUseFlask.freeSlot === undefined && index < 5) {
 				AUseFlask.freeSlot = index
+				console.log("index", index)
 			}
 		} else if (item instanceof item_flask) {
 			flask = item
