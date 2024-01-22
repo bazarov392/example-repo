@@ -2,6 +2,7 @@ import { EventsSDK, item_flask, LocalPlayer, TickSleeper } from "github.com/octa
 
 class AutoUseFlask {
 	public flask: Nullable<item_flask>
+	public freeSlots: number[] = []
 }
 const AUseFlask = new AutoUseFlask()
 const [UseFlaskSleeper] = [new TickSleeper()]
