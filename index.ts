@@ -17,5 +17,5 @@ EventsSDK.on("UnitItemsChanged", e => {
 })
 
 EventsSDK.on("LifeStateChanged", e => {
-	console.log("current hp", e.HP)
+	console.log("life", e)
 })
