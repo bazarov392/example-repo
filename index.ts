@@ -18,7 +18,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 	inv.TotalItems.map((item, index) => {
 		console.log("item", item)
 		if (item === undefined) {
-			if (AUseFlask.freeSlot !== undefined && index < 5) {
+			if (AUseFlask.freeSlot === undefined && index < 5) {
 				AUseFlask.freeSlot = index
 			}
 		} else if (item instanceof item_flask) {
