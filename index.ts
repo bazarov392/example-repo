@@ -2,7 +2,8 @@ import { EventsSDK, item_flask, LocalPlayer, TickSleeper } from "github.com/octa
 
 class AutoUseFlask {
 	public flask: Nullable<item_flask>
-	public freeSlots: number[] = []
+	public freeSlot: Nullable<number>
+	public isBackpack: boolean = false
 }
 const AUseFlask = new AutoUseFlask()
 const [UseFlaskSleeper] = [new TickSleeper()]
@@ -13,7 +14,21 @@ EventsSDK.on("GameStarted", () => {
 
 EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
-	AUseFlask.flask = inv.TotalItems.find(i => i instanceof item_flask)
+	let flask: Nullable<item_flask>
+	inv.TotalItems.map((item, index) => {
+		if (item === undefined) {
+			if (AUseFlask.freeSlot !== undefined && index < 5) {
+				AUseFlask.freeSlot = index
+			}
+		} else if (item instanceof item_flask) {
+			flask = item
+			AUseFlask.isBackpack = item.ItemSlot >= 6 && item.ItemSlot <= 8
+		}
+	})
+
+	// const flask = inv.TotalItems.find(i => i instanceof item_flask)
+	AUseFlask.flask = flask
+
 	console.log("flask", AUseFlask.flask?.IsHidden)
 })
 
@@ -28,9 +43,15 @@ EventsSDK.on("Tick", () => {
 	const oneProcentHP = hero.MaxHP / 100
 
 	if (oneProcentHP * 20 >= hero.HP) {
-		UseFlaskSleeper.Sleep(14000)
-		if (AUseFlask.flask) {
-			hero.CastTarget(AUseFlask.flask, hero)
+		// UseFlaskSleeper.Sleep(14000)
+		if (AUseFlask.flask !== undefined) {
+			if (AUseFlask.isBackpack && AUseFlask.freeSlot !== undefined) {
+				hero.MoveItem(AUseFlask.flask, AUseFlask.freeSlot)
+				UseFlaskSleeper.Sleep(3500)
+			} else {
+				UseFlaskSleeper.Sleep(14000)
+				hero.CastTarget(AUseFlask.flask, hero)
+			}
 		}
 	}
 })
