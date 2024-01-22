@@ -12,7 +12,7 @@ EventsSDK.on("GameStarted", () => {
 
 EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
-	AUseFlask.flask = inv.Items.find(i => i instanceof item_flask)
+	AUseFlask.flask = inv.TotalItems.find(i => i instanceof item_flask)
 	console.log("flask", AUseFlask.flask?.IsHidden)
 })
 
