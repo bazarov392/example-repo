@@ -15,6 +15,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
 	const flask = inv.Items.find(i => i instanceof item_flask)
 	AUseFlask.flask = flask ? flask : null
+	console.log("flask", flask)
 })
 
 EventsSDK.on("Tick", () => {
