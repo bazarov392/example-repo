@@ -1,4 +1,9 @@
-import { EventsSDK, item_flask, TickSleeper } from "github.com/octarine-public/wrapper/index"
+import {
+	EventsSDK,
+	item_flask,
+	npc_dota_hero_night_stalker,
+	TickSleeper
+} from "github.com/octarine-public/wrapper/index"
 
 class AutoUseFlask {
 	public flasks: item_flask[] = []
@@ -17,5 +22,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 })
 
 EventsSDK.on("UnitStateChanged", e => {
-	console.log("life", e)
+	if (e instanceof npc_dota_hero_night_stalker) {
+		console.log(e)
+	}
 })
