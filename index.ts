@@ -34,6 +34,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 })
 
 EventsSDK.on("Tick", () => {
+	console.log("a", AUseFlask)
 	if (UseFlaskSleeper.Sleeping) {
 		return false
 	}
