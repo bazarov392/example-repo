@@ -16,17 +16,18 @@ EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
 	let flask: Nullable<item_flask>
 	console.log("total items", inv.TotalItems)
+	if (AUseFlask.freeSlot !== undefined && inv.TotalItems[AUseFlask.freeSlot] !== undefined) {
+		AUseFlask.freeSlot = undefined
+	}
 	inv.TotalItems.map((item, index) => {
 		if (item === undefined) {
 			if (AUseFlask.freeSlot === undefined && index < 5) {
 				AUseFlask.freeSlot = index
-				console.log("index", index)
 			}
 		} else if (item instanceof item_flask) {
 			flask = item
 			AUseFlask.isBackpack = item.ItemSlot >= 6 && item.ItemSlot <= 8
 		}
-		console.log("map items", index, item)
 	})
 
 	// const flask = inv.TotalItems.find(i => i instanceof item_flask)
