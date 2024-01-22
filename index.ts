@@ -11,6 +11,7 @@ EventsSDK.on("GameStarted", () => {
 })
 
 EventsSDK.on("UnitItemsChanged", e => {
+	console.log("change inventory")
 	const inv = e.Inventory
 	const flask = inv.Items.find(i => i instanceof item_flask)
 	AUseFlask.flask = flask ? flask : null
