@@ -16,7 +16,6 @@ EventsSDK.on("UnitItemsChanged", e => {
 	const inv = e.Inventory
 	let flask: Nullable<item_flask>
 	inv.TotalItems.map((item, index) => {
-		console.log("item", item)
 		if (item === undefined) {
 			if (AUseFlask.freeSlot === undefined && index < 5) {
 				AUseFlask.freeSlot = index
@@ -30,7 +29,7 @@ EventsSDK.on("UnitItemsChanged", e => {
 	// const flask = inv.TotalItems.find(i => i instanceof item_flask)
 	AUseFlask.flask = flask
 
-	console.log("flask", AUseFlask.flask?.IsHidden)
+	console.log("flask", AUseFlask.flask)
 })
 
 EventsSDK.on("Tick", () => {
