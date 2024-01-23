@@ -4,11 +4,14 @@ import {
 	item_flask,
 	LocalPlayer,
 	RendererSDK,
+	TickSleeper,
 	Vector2
 } from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
 let lastHP: Nullable<number> = 0
+let hasAttacted = false
+const AttackedSleeper = new TickSleeper()
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (!ent.IsMyHero) {
@@ -23,17 +26,32 @@ EventsSDK.on("UnitItemsChanged", ent => {
 	return (itemFlask = flask)
 })
 
+EventsSDK.on("Draw", () => {
+	RendererSDK.Text(`hasAttacked ${hasAttacted}`, new Vector2(200, 200), Color.Red)
+})
+
+EventsSDK.on("PostDataUpdate", () => {
+	if (AttackedSleeper.Sleeping) {
+		return false
+	}
+
+	const localHero = LocalPlayer?.Hero
+	if (!localHero || !itemFlask) {
+		return false
+	}
+	if (lastHP === undefined) {
+		return false
+	}
+
+	hasAttacted = lastHP > localHero.HP
+	lastHP = localHero.HP
+})
+
 EventsSDK.on("PostDataUpdate", () => {
 	const localHero = LocalPlayer?.Hero
 	if (!localHero || !itemFlask) {
 		return false
 	}
-	let hasAttacted = false
-	if (lastHP !== undefined) {
-		hasAttacted = localHero.HP < lastHP
-	}
-	lastHP = localHero.HP
-	RendererSDK.Text(`hasAttacted ${hasAttacted}`, new Vector2(200, 200), Color.Red)
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
