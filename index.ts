@@ -40,6 +40,7 @@ EventsSDK.on("PostDataUpdate", () => {
 		return false
 	}
 	if (lastHP === undefined) {
+		lastHP = localHero.HP
 		return false
 	}
 
