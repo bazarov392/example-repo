@@ -47,6 +47,7 @@ EventsSDK.on("PostDataUpdate", () => {
 	if (newStateHasAttacted === hasAttacted) {
 		return false
 	}
+	AttackedSleeper.Sleep(1000)
 	hasAttacted = newStateHasAttacted
 	lastHP = localHero.HP
 })
