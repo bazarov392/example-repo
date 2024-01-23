@@ -27,7 +27,6 @@ EventsSDK.on("UnitItemsChanged", ent => {
 
 EventsSDK.on("Draw", () => {
 	RendererSDK.Text(`hasAttacked ${hasAttacted}`, new Vector2(200, 200), Color.Red)
-	console.log("hasAttacted", hasAttacted)
 })
 
 EventsSDK.on("PostDataUpdate", () => {
@@ -35,6 +34,7 @@ EventsSDK.on("PostDataUpdate", () => {
 	if (!localHero || !itemFlask) {
 		return false
 	}
+
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
