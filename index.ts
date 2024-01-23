@@ -4,14 +4,13 @@ import {
 	item_flask,
 	LocalPlayer,
 	RendererSDK,
-	TickSleeper,
 	Vector2
 } from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
 let lastHP: Nullable<number> = 0
 let hasAttacted = false
-const AttackedSleeper = new TickSleeper()
+// const AttackedSleeper = new TickSleeper()
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (!ent.IsMyHero) {
@@ -32,10 +31,6 @@ EventsSDK.on("Draw", () => {
 })
 
 EventsSDK.on("PostDataUpdate", () => {
-	if (AttackedSleeper.Sleeping) {
-		return false
-	}
-
 	const localHero = LocalPlayer?.Hero
 	if (!localHero || !itemFlask) {
 		return false
@@ -45,7 +40,7 @@ EventsSDK.on("PostDataUpdate", () => {
 	}
 	hasAttacted = lastHP > localHero.HP
 	console.log(hasAttacted)
-	AttackedSleeper.Sleep(1000)
+	// AttackedSleeper.Sleep(1000
 })
 
 EventsSDK.on("PostDataUpdate", () => {
