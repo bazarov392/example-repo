@@ -1,4 +1,11 @@
-import { EventsSDK, item_flask, LocalPlayer } from "github.com/octarine-public/wrapper/index"
+import {
+	Color,
+	EventsSDK,
+	item_flask,
+	LocalPlayer,
+	RendererSDK,
+	Vector2
+} from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
 let lastHP: Nullable<number> = 0
@@ -26,7 +33,7 @@ EventsSDK.on("PostDataUpdate", () => {
 		hasAttacted = localHero.HP < lastHP
 	}
 	lastHP = localHero.HP
-	console.log("hasAttacked", hasAttacted)
+	RendererSDK.Text(`hasAttacted ${hasAttacted}`, new Vector2(200, 200), Color.Red)
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
