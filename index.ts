@@ -8,8 +8,8 @@ import {
 } from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
-let lastHP: Nullable<number> = 0
-let hasAttacted = false
+// const lastHP: Nullable<number> = 0
+const hasAttacted = false
 // const AttackedSleeper = new TickSleeper()
 
 EventsSDK.on("UnitItemsChanged", ent => {
@@ -28,19 +28,6 @@ EventsSDK.on("UnitItemsChanged", ent => {
 EventsSDK.on("Draw", () => {
 	RendererSDK.Text(`hasAttacked ${hasAttacted}`, new Vector2(200, 200), Color.Red)
 	console.log("hasAttacted", hasAttacted)
-})
-
-EventsSDK.on("PostDataUpdate", () => {
-	const localHero = LocalPlayer?.Hero
-	if (!localHero || !itemFlask) {
-		return false
-	}
-	if (lastHP === undefined) {
-		return (lastHP = localHero.HP)
-	}
-	hasAttacted = lastHP > localHero.HP
-	console.log(hasAttacted)
-	// AttackedSleeper.Sleep(1000
 })
 
 EventsSDK.on("PostDataUpdate", () => {
