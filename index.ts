@@ -32,7 +32,6 @@ EventsSDK.on("Draw", () => {
 })
 
 EventsSDK.on("PostDataUpdate", () => {
-	console.log("Post")
 	if (AttackedSleeper.Sleeping) {
 		return false
 	}
