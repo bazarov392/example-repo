@@ -23,9 +23,8 @@ EventsSDK.on("PostDataUpdate", () => {
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
-		if (!itemFlask.CanBeCasted() || localHero.HasBuffByName("modifier_flask_healing")) {
-			return false
+		if (itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
+			localHero.CastTarget(itemFlask, localHero)
 		}
-		localHero.CastTarget(itemFlask, localHero)
 	}
 })
