@@ -28,6 +28,7 @@ EventsSDK.on("UnitItemsChanged", ent => {
 
 EventsSDK.on("Draw", () => {
 	RendererSDK.Text(`hasAttacked ${hasAttacted}`, new Vector2(200, 200), Color.Red)
+	console.log("hasAttacted", hasAttacted)
 })
 
 EventsSDK.on("PostDataUpdate", () => {
@@ -62,7 +63,7 @@ EventsSDK.on("PostDataUpdate", () => {
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
 		if (itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
-			localHero.CastTarget(itemFlask, localHero)
+			return localHero.CastTarget(itemFlask, localHero)
 		}
 	}
 })
