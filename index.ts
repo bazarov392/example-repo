@@ -44,6 +44,7 @@ EventsSDK.on("PostDataUpdate", () => {
 		return (lastHP = localHero.HP)
 	}
 	hasAttacted = lastHP > localHero.HP
+	console.log(hasAttacted)
 	AttackedSleeper.Sleep(1000)
 })
 
