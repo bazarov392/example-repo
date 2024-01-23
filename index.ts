@@ -46,12 +46,12 @@ EventsSDK.on("PostDataUpdate", () => {
 	}
 
 	const newStateHasAttacted = lastHP > localHero.HP
+	lastHP = localHero.HP
 	if (newStateHasAttacted === hasAttacted) {
 		return false
 	}
 	AttackedSleeper.Sleep(1000)
 	hasAttacted = newStateHasAttacted
-	lastHP = localHero.HP
 })
 
 EventsSDK.on("PostDataUpdate", () => {
