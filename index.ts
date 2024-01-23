@@ -43,7 +43,11 @@ EventsSDK.on("PostDataUpdate", () => {
 		return false
 	}
 
-	hasAttacted = lastHP > localHero.HP
+	const newStateHasAttacted = lastHP > localHero.HP
+	if (newStateHasAttacted === hasAttacted) {
+		return false
+	}
+	hasAttacted = newStateHasAttacted
 	lastHP = localHero.HP
 })
 
