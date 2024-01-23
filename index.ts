@@ -1,6 +1,7 @@
 import { EventsSDK, item_flask, LocalPlayer } from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
+const lastHP: number = 0
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (!ent.IsMyHero) {
@@ -20,6 +21,8 @@ EventsSDK.on("PostDataUpdate", () => {
 	if (!localHero || !itemFlask) {
 		return false
 	}
+	const hasAttacked = localHero.HP < lastHP
+	console.log("hasAttacted", hasAttacked)
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
