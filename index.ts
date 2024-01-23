@@ -1,16 +1,6 @@
-import {
-	Color,
-	EventsSDK,
-	item_flask,
-	LocalPlayer,
-	RendererSDK,
-	Vector2
-} from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_flask, LocalPlayer } from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
-// const lastHP: Nullable<number> = 0
-const hasAttacted = false
-// const AttackedSleeper = new TickSleeper()
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (!ent.IsMyHero) {
@@ -23,10 +13,6 @@ EventsSDK.on("UnitItemsChanged", ent => {
 		return
 	}
 	return (itemFlask = flask)
-})
-
-EventsSDK.on("Draw", () => {
-	RendererSDK.Text(`hasAttacked ${hasAttacted}`, new Vector2(200, 200), Color.Red)
 })
 
 EventsSDK.on("PostDataUpdate", () => {
