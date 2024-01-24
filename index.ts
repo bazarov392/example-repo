@@ -10,6 +10,7 @@ import {
 let itemFlask: Nullable<item_flask>
 const enemyHeroes: Entity[] = []
 EventsSDK.on("GameStarted", () => {
+	console.log(EntityManager.AllEntities)
 	enemyHeroes.push(...EntityManager.AllEntities.filter(ent => ent.IsEnemy() && /^npc_dota_hero/.test(ent.Name)))
 	console.log("enemyHeroes", enemyHeroes)
 })
