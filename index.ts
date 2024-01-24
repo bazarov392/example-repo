@@ -1,18 +1,28 @@
-import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa, Unit } from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_flask, LocalPlayer, Unit } from "github.com/octarine-public/wrapper/index"
 import { Hero } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemFlask: Nullable<item_flask>
+const originalEnemyHeroes: Hero[] = []
 const enemyHeroes: Hero[] = []
+let onAttack = false
 
 const clearEnemyHeroes = () => {
-	enemyHeroes.clear()
+	originalEnemyHeroes.clear()
 }
 EventsSDK.on("GameStarted", clearEnemyHeroes)
 
 EventsSDK.on("GameEnded", clearEnemyHeroes)
 
 EventsSDK.on("Tick", () => {
-	console.log(enemyHeroes)
+	const localHero = LocalPlayer?.Hero
+	if (!localHero) {
+		return
+	}
+	let c = false
+	for (const hero of enemyHeroes) {
+		c = hero.Distance2D(localHero) < 500
+	}
+	onAttack = c
 })
 
 EventsSDK.on("UnitItemsChanged", ent => {
@@ -36,32 +46,15 @@ EventsSDK.on("PostDataUpdate", () => {
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
-		if (itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
+		if (onAttack && itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
 			return localHero.CastTarget(itemFlask, localHero)
 		}
 	}
 })
 
-EventsSDK.on("EntityVisibleChanged", entity => {
-	// const index =
-	if (!(entity instanceof npc_dota_hero_ursa)) {
-		return false
-	}
-
-	const localHero = LocalPlayer?.Hero
-	if (!localHero) {
-		return false
-	}
-	const positions = {
-		hero: localHero.Position,
-		entity: entity.Position
-	}
-
-	const distance = Math.sqrt(
-		Math.pow(positions.hero.x - positions.entity.x, 2) + Math.pow(positions.hero.y - positions.entity.y, 2)
-	)
-
-	console.log("distance", distance)
+EventsSDK.on("EntityVisibleChanged", () => {
+	enemyHeroes.clear()
+	enemyHeroes.push(...originalEnemyHeroes.filter(hero => hero.IsValid && hero.IsVisible))
 })
 
 // EventsSDK.on('')
