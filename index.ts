@@ -1,13 +1,4 @@
-import {
-	Color,
-	EventsSDK,
-	item_faerie_fire,
-	item_flask,
-	LocalPlayer,
-	RendererSDK,
-	Unit,
-	Vector2
-} from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_faerie_fire, item_flask, LocalPlayer, Unit } from "github.com/octarine-public/wrapper/index"
 import { Hero } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemHealing: Nullable<item_flask | item_faerie_fire>
@@ -21,10 +12,6 @@ const clearEnemyHeroes = () => {
 EventsSDK.on("GameStarted", clearEnemyHeroes)
 
 EventsSDK.on("GameEnded", clearEnemyHeroes)
-
-EventsSDK.on("Draw", () => {
-	RendererSDK.Text(`onAttack ${onAttack}`, new Vector2(200, 300), Color.Red, undefined, 28)
-})
 
 EventsSDK.on("Tick", () => {
 	const localHero = LocalPlayer?.Hero
