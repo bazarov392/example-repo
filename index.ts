@@ -22,7 +22,7 @@ EventsSDK.on("GameStarted", clearEnemyHeroes)
 EventsSDK.on("GameEnded", clearEnemyHeroes)
 
 EventsSDK.on("Draw", () => {
-	RendererSDK.Text(`onAttack ${onAttack}`, new Vector2(200, 300), Color.Red)
+	RendererSDK.Text(`onAttack ${onAttack}`, new Vector2(200, 300), Color.Red, undefined, 28)
 })
 
 EventsSDK.on("Tick", () => {
