@@ -1,6 +1,18 @@
-import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa } from "github.com/octarine-public/wrapper/index"
+import {
+	Entity,
+	EntityManager,
+	EventsSDK,
+	item_flask,
+	LocalPlayer,
+	npc_dota_hero_ursa
+} from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
+const enemyHeroes: Entity[] = []
+EventsSDK.on("GameStarted", () => {
+	enemyHeroes.push(...EntityManager.AllEntities.filter(ent => ent.IsEnemy() && /^npc_dota_hero/.test(ent.Name)))
+	console.log("enemyHeroes", enemyHeroes)
+})
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (ent.IsMyHero) {
@@ -43,3 +55,5 @@ EventsSDK.on("EntityVisibleChanged", entity => {
 
 	console.log("distance", distance)
 })
+
+// EventsSDK.on('')
