@@ -32,7 +32,7 @@ EventsSDK.on("Tick", () => {
 	}
 	let c = true
 	for (const hero of enemyHeroes) {
-		c = hero.Distance2D(localHero) > hero.BaseAttackRange
+		c = hero.Distance2D(localHero) > hero.BaseAttackRange + 300
 	}
 	onAttack = c
 })
