@@ -24,5 +24,22 @@ EventsSDK.on("PostDataUpdate", () => {
 })
 
 EventsSDK.on("EntityVisibleChanged", entity => {
-	console.log(entity.Position)
+	const localHero = LocalPlayer?.Hero
+	if (!localHero) {
+		return false
+	}
+
+	const positions = {
+		hero: entity.Position,
+		entity: entity.Position
+	}
+
+	const distance = Math.sqrt(
+		Math.pow(positions.hero.x - positions.entity.x, 2) + Math.pow(positions.hero.y - positions.entity.y, 2)
+	)
+
+	console.log("distance", {
+		value: distance,
+		entity: entity.Name
+	})
 })
