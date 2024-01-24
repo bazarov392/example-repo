@@ -3,7 +3,10 @@ import { Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/
 
 let itemFlask: Nullable<item_flask>
 EventsSDK.on("GameStarted", () => {
-	console.log("enemyHeroes", Heroes)
+	console.log(
+		"enemyHeroes",
+		Heroes.filter(hero => hero.IsEnemy())
+	)
 })
 
 EventsSDK.on("UnitItemsChanged", ent => {
