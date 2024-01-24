@@ -1,6 +1,5 @@
 import {
 	Entity,
-	EntityManager,
 	EventsSDK,
 	item_flask,
 	LocalPlayer,
@@ -11,8 +10,7 @@ import { Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/
 let itemFlask: Nullable<item_flask>
 const enemyHeroes: Entity[] = []
 EventsSDK.on("GameStarted", () => {
-	console.log(EntityManager.AllEntities)
-	console.log("heroes", Heroes)
+	enemyHeroes.push(...Heroes.filter(hero => hero.IsEnemy()))
 	console.log("enemyHeroes", enemyHeroes)
 })
 
