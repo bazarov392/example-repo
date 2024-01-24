@@ -12,7 +12,7 @@ import { Hero } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/He
 let itemFlask: Nullable<item_flask>
 const originalEnemyHeroes: Hero[] = []
 const enemyHeroes: Hero[] = []
-let onAttack = false
+let onAttack = true
 
 const clearEnemyHeroes = () => {
 	originalEnemyHeroes.clear()
@@ -30,7 +30,7 @@ EventsSDK.on("Tick", () => {
 	if (!localHero) {
 		return
 	}
-	let c = false
+	let c = true
 	for (const hero of enemyHeroes) {
 		c = hero.Distance2D(localHero) > 500
 	}
