@@ -1,6 +1,7 @@
 import {
 	Color,
 	EventsSDK,
+	item_faerie_fire,
 	item_flask,
 	LocalPlayer,
 	RendererSDK,
@@ -9,7 +10,7 @@ import {
 } from "github.com/octarine-public/wrapper/index"
 import { Hero } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
-let itemFlask: Nullable<item_flask>
+let itemHealing: Nullable<item_flask | item_faerie_fire>
 const originalEnemyHeroes: Hero[] = []
 const enemyHeroes: Hero[] = []
 let onAttack = true
@@ -42,9 +43,16 @@ EventsSDK.on("Tick", () => {
 })
 
 EventsSDK.on("UnitItemsChanged", ent => {
-	if (ent.IsMyHero) {
-		return (itemFlask = ent.GetItemByClass(item_flask))
+	if (!ent.IsMyHero) {
+		return
 	}
+
+	let item = ent.GetItemByClass(item_flask)
+	if (!item) {
+		item = ent.GetItemByClass(item_faerie_fire)
+	}
+
+	itemHealing = item
 })
 
 EventsSDK.on("EntityCreated", ent => {
@@ -55,15 +63,15 @@ EventsSDK.on("EntityCreated", ent => {
 
 EventsSDK.on("PostDataUpdate", () => {
 	const localHero = LocalPlayer?.Hero
-	if (!localHero || !itemFlask) {
+	if (!localHero || !itemHealing) {
 		return false
 	}
 
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
-		if (onAttack && itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
-			return localHero.CastTarget(itemFlask, localHero)
+		if (onAttack && itemHealing.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
+			return localHero.CastTarget(itemHealing, localHero)
 		}
 	}
 })
