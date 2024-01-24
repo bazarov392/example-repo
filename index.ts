@@ -45,7 +45,7 @@ EventsSDK.on("UnitItemsChanged", ent => {
 
 EventsSDK.on("EntityCreated", ent => {
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy()) {
-		enemyHeroes.push(ent as Hero)
+		originalEnemyHeroes.push(ent as Hero)
 	}
 })
 
