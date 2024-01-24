@@ -32,7 +32,6 @@ EventsSDK.on("EntityVisibleChanged", entity => {
 	if (!localHero) {
 		return false
 	}
-
 	const positions = {
 		hero: entity.Position,
 		entity: entity.Position
