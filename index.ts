@@ -11,7 +11,7 @@ let itemFlask: Nullable<item_flask>
 const enemyHeroes: Entity[] = []
 EventsSDK.on("GameStarted", () => {
 	console.log(EntityManager.AllEntities)
-	enemyHeroes.push(...EntityManager.AllEntities.filter(ent => ent.IsEnemy() && ent.Name_.includes("hero")))
+	enemyHeroes.push(...EntityManager.AllEntities.filter(ent => ent.IsEnemy()))
 	console.log("enemyHeroes", enemyHeroes)
 })
 
