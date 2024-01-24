@@ -1,17 +1,29 @@
-import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa } from "github.com/octarine-public/wrapper/index"
-import { Hero, Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
+import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa, Unit } from "github.com/octarine-public/wrapper/index"
+import { Hero } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemFlask: Nullable<item_flask>
 const enemyHeroes: Hero[] = []
-EventsSDK.on("GameStarted", () => {
-	console.log("heroes", Heroes)
-	console.log(Heroes.filter(hero => hero.IsEnemy()))
-	enemyHeroes.push(...Heroes.filter(hero => hero instanceof npc_dota_hero_ursa))
+
+const clearEnemyHeroes = () => {
+	enemyHeroes.clear()
+}
+EventsSDK.on("GameStarted", clearEnemyHeroes)
+
+EventsSDK.on("GameEnded", clearEnemyHeroes)
+
+EventsSDK.on("Tick", () => {
+	console.log(enemyHeroes)
 })
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (ent.IsMyHero) {
 		return (itemFlask = ent.GetItemByClass(item_flask))
+	}
+})
+
+EventsSDK.on("EntityCreated", ent => {
+	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy()) {
+		enemyHeroes.push(ent as Hero)
 	}
 })
 
