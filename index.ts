@@ -29,3 +29,11 @@ EventsSDK.on("PostDataUpdate", () => {
 		}
 	}
 })
+
+EventsSDK.on("AttackStarted", () => {
+	console.log("Attack started")
+})
+
+EventsSDK.on("AttackEnded", () => {
+	console.log("Attack ended")
+})
