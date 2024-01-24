@@ -1,4 +1,12 @@
-import { EventsSDK, item_flask, LocalPlayer, Unit } from "github.com/octarine-public/wrapper/index"
+import {
+	Color,
+	EventsSDK,
+	item_flask,
+	LocalPlayer,
+	RendererSDK,
+	Unit,
+	Vector2
+} from "github.com/octarine-public/wrapper/index"
 import { Hero } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemFlask: Nullable<item_flask>
@@ -12,6 +20,10 @@ const clearEnemyHeroes = () => {
 EventsSDK.on("GameStarted", clearEnemyHeroes)
 
 EventsSDK.on("GameEnded", clearEnemyHeroes)
+
+EventsSDK.on("Draw", () => {
+	RendererSDK.Text(`onAttack ${onAttack}`, new Vector2(200, 300), Color.Red)
+})
 
 EventsSDK.on("Tick", () => {
 	const localHero = LocalPlayer?.Hero
