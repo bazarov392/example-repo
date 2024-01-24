@@ -1,17 +1,9 @@
-import {
-	Entity,
-	EventsSDK,
-	item_flask,
-	LocalPlayer,
-	npc_dota_hero_ursa
-} from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa } from "github.com/octarine-public/wrapper/index"
 import { Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemFlask: Nullable<item_flask>
-const enemyHeroes: Entity[] = []
 EventsSDK.on("GameStarted", () => {
-	enemyHeroes.push(...Heroes)
-	console.log("enemyHeroes", enemyHeroes)
+	console.log("enemyHeroes", Heroes)
 })
 
 EventsSDK.on("UnitItemsChanged", ent => {
