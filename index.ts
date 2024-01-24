@@ -6,12 +6,13 @@ import {
 	LocalPlayer,
 	npc_dota_hero_ursa
 } from "github.com/octarine-public/wrapper/index"
+import { Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemFlask: Nullable<item_flask>
 const enemyHeroes: Entity[] = []
 EventsSDK.on("GameStarted", () => {
 	console.log(EntityManager.AllEntities)
-	enemyHeroes.push(...EntityManager.AllEntities.filter(ent => ent.IsEnemy()))
+	console.log("heroes", Heroes)
 	console.log("enemyHeroes", enemyHeroes)
 })
 
