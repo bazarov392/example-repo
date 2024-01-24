@@ -32,7 +32,7 @@ EventsSDK.on("Tick", () => {
 	}
 	let c = false
 	for (const hero of enemyHeroes) {
-		c = hero.Distance2D(localHero) < 500
+		c = hero.Distance2D(localHero) > 500
 	}
 	onAttack = c
 })
@@ -58,7 +58,7 @@ EventsSDK.on("PostDataUpdate", () => {
 	const onePercentHP = localHero.MaxHP / 100
 	const thresholdHP = onePercentHP * 50
 	if (thresholdHP >= localHero.HP) {
-		if (!onAttack && itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
+		if (onAttack && itemFlask.CanBeCasted() && !localHero.HasBuffByName("modifier_flask_healing")) {
 			return localHero.CastTarget(itemFlask, localHero)
 		}
 	}
