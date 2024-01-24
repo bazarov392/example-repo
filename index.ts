@@ -1,12 +1,12 @@
 import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa } from "github.com/octarine-public/wrapper/index"
-import { Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
+import { Hero, Heroes } from "github.com/octarine-public/wrapper/wrapper/Objects/Base/Hero"
 
 let itemFlask: Nullable<item_flask>
+const enemyHeroes: Hero[] = []
 EventsSDK.on("GameStarted", () => {
-	console.log(
-		"enemyHeroes",
-		Heroes.filter(hero => hero.IsEnemy())
-	)
+	console.log("heroes", Heroes)
+	console.log(Heroes.filter(hero => hero.IsEnemy()))
+	enemyHeroes.push(...Heroes.filter(hero => hero instanceof npc_dota_hero_ursa))
 })
 
 EventsSDK.on("UnitItemsChanged", ent => {
@@ -31,6 +31,7 @@ EventsSDK.on("PostDataUpdate", () => {
 })
 
 EventsSDK.on("EntityVisibleChanged", entity => {
+	// const index =
 	if (!(entity instanceof npc_dota_hero_ursa)) {
 		return false
 	}
