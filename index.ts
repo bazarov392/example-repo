@@ -1,4 +1,4 @@
-import { EventsSDK, item_flask, LocalPlayer } from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_flask, LocalPlayer, npc_dota_hero_ursa } from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
 
@@ -24,6 +24,10 @@ EventsSDK.on("PostDataUpdate", () => {
 })
 
 EventsSDK.on("EntityVisibleChanged", entity => {
+	if (!(entity instanceof npc_dota_hero_ursa)) {
+		return false
+	}
+
 	const localHero = LocalPlayer?.Hero
 	if (!localHero) {
 		return false
