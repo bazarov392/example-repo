@@ -33,7 +33,7 @@ EventsSDK.on("EntityVisibleChanged", entity => {
 		return false
 	}
 	const positions = {
-		hero: entity.Position,
+		hero: localHero.Position,
 		entity: entity.Position
 	}
 
@@ -41,5 +41,5 @@ EventsSDK.on("EntityVisibleChanged", entity => {
 		Math.pow(positions.hero.x - positions.entity.x, 2) + Math.pow(positions.hero.y - positions.entity.y, 2)
 	)
 
-	console.log("distance", positions)
+	console.log("distance", distance)
 })
