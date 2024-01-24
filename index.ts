@@ -7,12 +7,7 @@ EventsSDK.on("UnitItemsChanged", ent => {
 		return
 	}
 
-	const flask = ent.GetItemByClass(item_flask)
-	if (flask === undefined) {
-		itemFlask = undefined
-		return
-	}
-	return (itemFlask = flask)
+	return (itemFlask = ent.GetItemByClass(item_flask))
 })
 
 EventsSDK.on("PostDataUpdate", () => {
