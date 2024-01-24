@@ -1,6 +1,26 @@
-import { EventsSDK, item_flask, LocalPlayer } from "github.com/octarine-public/wrapper/index"
+import {
+	EventsSDK,
+	item_flask,
+	LocalPlayer,
+	Notification,
+	NotificationsSDK,
+	Rectangle
+} from "github.com/octarine-public/wrapper/index"
 
 let itemFlask: Nullable<item_flask>
+
+class TestNotification extends Notification {
+	public Draw(position: Rectangle): void {
+		console.log("asd")
+	}
+	public OnClick(): boolean {
+		return true
+	}
+}
+
+EventsSDK.on("GameStarted", () => {
+	NotificationsSDK.Push(new TestNotification())
+})
 
 EventsSDK.on("UnitItemsChanged", ent => {
 	if (!ent.IsMyHero) {
@@ -28,12 +48,4 @@ EventsSDK.on("PostDataUpdate", () => {
 			return localHero.CastTarget(itemFlask, localHero)
 		}
 	}
-})
-
-EventsSDK.on("AttackStarted", () => {
-	console.log("Attack started")
-})
-
-EventsSDK.on("AttackEnded", () => {
-	console.log("Attack ended")
 })
