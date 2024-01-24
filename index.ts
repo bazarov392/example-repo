@@ -22,3 +22,7 @@ EventsSDK.on("PostDataUpdate", () => {
 		}
 	}
 })
+
+EventsSDK.on("EntityVisibleChanged", entity => {
+	console.log("visible", entity.Name)
+})
