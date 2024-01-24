@@ -3,11 +3,9 @@ import { EventsSDK, item_flask, LocalPlayer } from "github.com/octarine-public/w
 let itemFlask: Nullable<item_flask>
 
 EventsSDK.on("UnitItemsChanged", ent => {
-	if (!ent.IsMyHero) {
-		return
+	if (ent.IsMyHero) {
+		return (itemFlask = ent.GetItemByClass(item_flask))
 	}
-
-	return (itemFlask = ent.GetItemByClass(item_flask))
 })
 
 EventsSDK.on("PostDataUpdate", () => {
