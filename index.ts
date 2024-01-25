@@ -5,3 +5,5 @@ EventsSDK.on("LinearProjectileCreated", tile => console.log("LinearProjectileCre
 EventsSDK.on("TrackingProjectileCreated", tile => console.log("TrackingProjectileCreated", tile))
 
 EventsSDK.on("EntityCreated", ent => console.log("EntityCreated", ent))
+
+EventsSDK.on("FakeUnitCreated", ent => console.log("FakeUnitCreated", ent))
