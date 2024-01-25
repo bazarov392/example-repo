@@ -9,9 +9,8 @@ EventsSDK.on("TrackingProjectileCreated", tile => console.log("TrackingProjectil
 
 EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectileUpdated", tile))
 
-// EventsSDK.on("EntityCreated", ent => console.log("EntityCreated", ent))
-
-// EventsSDK.on("FakeUnitCreated", ent => console.log("FakeUnitCreated", ent))
+EventsSDK.on("EntityCreated", ent => console.log("EntityCreated", ent))
+EventsSDK.on("PreEntityCreated", ent => console.log("PreEntityCreated", ent))
 
 EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
 
