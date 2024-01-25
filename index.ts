@@ -13,6 +13,17 @@ EventsSDK.on("FakeUnitCreated", ent => console.log("FakeUnitCreated", ent))
 
 EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
 
+EventsSDK.on("AbilityCooldownChanged", abil => {
+	const owner = abil.OwnerEntity
+	if (!owner) {
+		return
+	}
+
+	if (owner.IsValid && owner.IsEnemy()) {
+		console.log("AbilityCooldownChanged", abil)
+	}
+})
+
 // EventsSDK.on("AbilityCooldownChanged", a => {
 // 	const hero = LocalPlayer?.Hero
 // 	if (!hero) {
