@@ -1,4 +1,4 @@
-import { EventsSDK, ImageData, RendererSDK, Vector2 } from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, RendererSDK, Vector2 } from "github.com/octarine-public/wrapper/index"
 
 EventsSDK.on("GameStarted", () => {
 	console.log()
@@ -20,5 +20,5 @@ EventsSDK.on("GameStarted", () => {
 // })
 
 EventsSDK.on("Draw", () => {
-	RendererSDK.Image(ImageData.Paths.Icons.tower_dire, new Vector2(-2447, 1062), undefined, new Vector2(30, 30))
+	RendererSDK.OutlinedRect(new Vector2(-2447, 1062), new Vector2(500, 500))
 })
