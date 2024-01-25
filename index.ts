@@ -15,6 +15,8 @@ EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectil
 
 EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
 
+EventsSDK.on("UnitAnimation", npc => console.log("UnitAnimation", npc))
+
 // EventsSDK.on("AbilityCooldownChanged", abil => {
 // 	const owner = abil.OwnerEntity
 // 	if (!owner) {
