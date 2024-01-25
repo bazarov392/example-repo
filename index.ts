@@ -12,7 +12,7 @@ EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectil
 EventsSDK.on("EntityCreated", ent => console.log("EntityCreated", ent))
 EventsSDK.on("PreEntityCreated", ent => console.log("PreEntityCreated", ent))
 
-EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent.Animations))
+EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
 
 EventsSDK.on("UnitAnimation", npc => console.log("UnitAnimation", npc))
 EventsSDK.on("UnitAnimationEnd", npc => console.log("UnitAnimationEnd", npc))
