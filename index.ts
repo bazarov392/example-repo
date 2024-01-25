@@ -20,5 +20,5 @@ EventsSDK.on("GameStarted", () => {
 // })
 
 EventsSDK.on("Draw", () => {
-	RendererSDK.Image(ImageData.Paths.Icons.tower_dire, new Vector2(-1447, -656))
+	RendererSDK.Image(ImageData.Paths.Icons.tower_dire, new Vector2(300, 300))
 })
