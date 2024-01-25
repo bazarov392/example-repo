@@ -7,3 +7,5 @@ EventsSDK.on("TrackingProjectileCreated", tile => console.log("TrackingProjectil
 EventsSDK.on("EntityCreated", ent => console.log("EntityCreated", ent))
 
 EventsSDK.on("FakeUnitCreated", ent => console.log("FakeUnitCreated", ent))
+
+EventsSDK.on("AbilityCooldownChanged", a => console.log("AbilityCooldownChanged", a))
