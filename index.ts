@@ -12,7 +12,13 @@ EventsSDK.on("GameStarted", () => {
 // EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectileUpdated", tile))
 
 EventsSDK.on("Draw", () => {
-	RendererSDK.Image(Paths.Icons.icon_svg_creep, new Vector2(-1194, -861), -1, new Vector2(20, 20), Color.White)
+	const w2sPosition = RendererSDK.WorldToScreen(new Vector2(-1194, -861))
+	if (!w2sPosition) {
+		return
+	}
+	const position = w2sPosition.Subtract(new Vector2(-1194, -861).DivideScalar(2))
+
+	RendererSDK.Image(Paths.Icons.icon_svg_creep, position, -1, new Vector2(20, 20), Color.White)
 })
 
 EventsSDK.on("ParticleDestroyed", particle => {
