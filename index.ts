@@ -1,4 +1,4 @@
-import { EventsSDK, Unit } from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, item_tpscroll, Unit } from "github.com/octarine-public/wrapper/index"
 
 const enemyHeroesInfo: {
 	[key: string]: {
@@ -42,6 +42,10 @@ EventsSDK.on("UnitAnimation", npc => console.log("UnitAnimation", npc))
 EventsSDK.on("UnitAnimationEnd", npc => console.log("UnitAnimationEnd", npc))
 
 EventsSDK.on("AbilityCooldownChanged", abil => {
+	if (!(abil instanceof item_tpscroll)) {
+		return
+	}
+
 	const hero = abil.OwnerEntity
 	if (!hero) {
 		return
