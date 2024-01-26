@@ -1,80 +1,85 @@
-import { Color, EventsSDK, Hero, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
+import { Color, EventsSDK, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
 
-type TeleportHeroObjectTrue = {
-	hero: Hero
-	positionStart: Vector3
-	positionEnd: Vector3
-	status: true
+type TeleportHeroObject = {
+	heroName: string
+	positionStart: Nullable<Vector3>
+	positionEnd: Nullable<Vector3>
 }
+const PathsTeleportParticles = ["particles/items2_fx/teleport_end.vpcf", "particles/items2_fx/teleport_start.vpcf"]
+const TeleportHeroes: TeleportHeroObject[] = []
 
-type TeleportHeroObjectFalse = {
-	hero: Hero
-	positionStart: undefined
-	positionEnd: undefined
-	status: false
+const ShowHeroIconOnScreen = (name: string, vecPos: Vector3) => {
+	const w2sPosition = RendererSDK.WorldToScreen(vecPos)
+	if (!w2sPosition) {
+		return
+	}
+	RendererSDK.Image(
+		`panorama/images/heroes/icons/${name}_png.vtex_c`,
+		w2sPosition,
+		-1,
+		new Vector2(20, 20),
+		Color.Red
+	)
 }
-
-const TeleportHeroes: (TeleportHeroObjectFalse | TeleportHeroObjectTrue)[] = []
 
 EventsSDK.on("EntityCreated", ent => {
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy()) {
 		TeleportHeroes.push({
-			hero: ent as Hero,
+			heroName: ent.Name,
 			positionStart: undefined,
-			positionEnd: undefined,
-			status: false
+			positionEnd: undefined
 		})
 	}
 })
 EventsSDK.on("Draw", () => {
 	for (const item of TeleportHeroes) {
-		if (item.status) {
-			const w2sPosition = RendererSDK.WorldToScreen(item.positionEnd)
-			if (!w2sPosition) {
-				continue
-			}
-			RendererSDK.Image(
-				`panorama/images/heroes/icons/${item.hero.Name}_png.vtex_c`,
-				w2sPosition,
-				-1,
-				new Vector2(20, 20),
-				Color.Red
-			)
+		if (item.positionEnd !== undefined) {
+			ShowHeroIconOnScreen(item.heroName, item.positionEnd)
+		}
+		if (item.positionStart !== undefined) {
+			ShowHeroIconOnScreen(item.heroName, item.positionStart)
 		}
 	}
 })
 
 EventsSDK.on("ParticleUpdated", particle => {
-	if (particle.Path !== "particles/items2_fx/teleport_end.vpcf") {
+	let type: Nullable<boolean>
+	if (PathsTeleportParticles[0] === particle.Path) {
+		type = true
+	} else if (PathsTeleportParticles[1] === particle.Path) {
+		type = false
+	} else {
 		return
 	}
-	console.log(1)
 	const ent = particle.ModifiersAttachedTo
-	console.log(1, particle)
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
-		// console.log(`${ent.Name_} телепортировался`, particle.ControlPoints.get(0))
-		console.log(2)
-		const obj = TeleportHeroes.find(item => item.hero.Name === ent.Name)
+		const obj = TeleportHeroes.find(item => item.heroName === ent.Name)
 		if (!obj) {
 			return
 		}
-		console.log(3)
-		obj.positionEnd = particle.ControlPoints.get(0)
-		obj.status = true
+
+		return type
+			? (obj.positionStart = particle.ControlPoints.get(0))
+			: (obj.positionEnd = particle.ControlPoints.get(0))
 	}
 })
 
 EventsSDK.on("ParticleDestroyed", particle => {
-	if (particle.Path !== "particles/items2_fx/teleport_end.vpcf") {
+	let type: Nullable<boolean>
+	if (PathsTeleportParticles[0] === particle.Path) {
+		type = true
+	} else if (PathsTeleportParticles[1] === particle.Path) {
+		type = false
+	} else {
 		return
 	}
 	const ent = particle.ModifiersAttachedTo
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
-		const obj = TeleportHeroes.find(item => item.hero.Name === ent.Name)
+		const obj = TeleportHeroes.find(item => item.heroName === ent.Name)
 		if (!obj) {
 			return
 		}
-		obj.status = false
-		obj.positionEnd = undefined
+
+		return type ? (obj.positionStart = undefined) : (obj.positionEnd = undefined)
 	}
 })
