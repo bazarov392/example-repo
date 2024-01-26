@@ -1,8 +1,7 @@
-import { EventsSDK, RendererSDK, Unit, Vector2 } from "github.com/octarine-public/wrapper/index"
+import { Color, EventsSDK, RendererSDK, Unit, Vector2 } from "github.com/octarine-public/wrapper/index"
 import { Paths } from "github.com/octarine-public/wrapper/wrapper/Data/ImageData"
 
 const PathParticleTeleport = "particles/items2_fx/teleport_end.vpcf"
-
 EventsSDK.on("GameStarted", () => {
 	console.log()
 })
@@ -13,7 +12,7 @@ EventsSDK.on("GameStarted", () => {
 // EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectileUpdated", tile))
 
 EventsSDK.on("Draw", () => {
-	RendererSDK.Image(Paths.Icons.icon_svg_creep, new Vector2(-1194, -861))
+	RendererSDK.Image(Paths.Icons.icon_svg_creep, new Vector2(-1194, -861), -1, new Vector2(20, 20), Color.White)
 })
 
 EventsSDK.on("ParticleDestroyed", particle => {
