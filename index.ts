@@ -1,6 +1,6 @@
 import { EventsSDK, Unit } from "github.com/octarine-public/wrapper/index"
 
-const PathParticleTeleport = "particles/items2_fx/teleport_start.vpcf"
+const PathParticleTeleport = "particles/items2_fx/teleport_end.vpcf"
 
 EventsSDK.on("GameStarted", () => {
 	console.log()
