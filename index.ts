@@ -27,6 +27,7 @@ EventsSDK.on("EntityCreated", ent => {
 	}
 })
 EventsSDK.on("Draw", () => {
+	console.log(TeleportHeroes)
 	for (const item of TeleportHeroes) {
 		if (item.status) {
 			const w2sPosition = RendererSDK.WorldToScreen(item.positionEnd)
