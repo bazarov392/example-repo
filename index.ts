@@ -50,7 +50,7 @@ EventsSDK.on("ParticleCreated", particle => {
 	}
 	console.log(1)
 	const ent = particle.ModifiersAttachedTo
-	console.log(1, ent, particle.ControlPoints)
+	console.log(1, ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0))
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
 		// console.log(`${ent.Name_} телепортировался`, particle.ControlPoints.get(0))
 		console.log(2)
