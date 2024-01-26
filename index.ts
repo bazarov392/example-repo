@@ -1,4 +1,12 @@
-import { Color, EventsSDK, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
+import {
+	Color,
+	EventsSDK,
+	MinimapSDK,
+	RendererSDK,
+	Unit,
+	Vector2,
+	Vector3
+} from "github.com/octarine-public/wrapper/index"
 
 type TeleportHeroObject = {
 	heroName: string
@@ -9,8 +17,8 @@ const PathsTeleportParticles = ["particles/items2_fx/teleport_end.vpcf", "partic
 const TeleportHeroes: TeleportHeroObject[] = []
 
 const ShowHeroIconOnScreen = (name: string, vecPos: Vector3) => {
-	const w2sPosition = RendererSDK.WorldToScreen(vecPos)
-	if (!w2sPosition) {
+	const [w2sPosition, m2sPosition] = [RendererSDK.WorldToScreen(vecPos), MinimapSDK.WorldToMinimap(vecPos)]
+	if (!w2sPosition || !m2sPosition) {
 		return
 	}
 	RendererSDK.Image(
@@ -18,6 +26,13 @@ const ShowHeroIconOnScreen = (name: string, vecPos: Vector3) => {
 		w2sPosition,
 		-1,
 		new Vector2(35, 35),
+		Color.White
+	)
+	RendererSDK.Image(
+		`panorama/images/heroes/icons/${name}_png.vtex_c`,
+		m2sPosition,
+		-1,
+		new Vector2(10, 10),
 		Color.White
 	)
 }
