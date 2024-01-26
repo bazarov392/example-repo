@@ -1,4 +1,4 @@
-import { EventsSDK, Hero, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
+import { Color, EventsSDK, Hero, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
 
 type TeleportHeroObjectTrue = {
 	hero: Hero
@@ -37,7 +37,8 @@ EventsSDK.on("Draw", () => {
 				`panorama/images/heroes/icons/${item.hero.Name}_png.vtex_c`,
 				w2sPosition,
 				-1,
-				new Vector2(20, 20)
+				new Vector2(20, 20),
+				Color.Red
 			)
 		}
 	}
@@ -47,17 +48,18 @@ EventsSDK.on("ParticleCreated", particle => {
 	if (particle.Path !== "particles/items2_fx/teleport_end.vpcf") {
 		return
 	}
-
+	console.log(1)
 	const ent = particle.ModifiersAttachedTo
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
 		// console.log(`${ent.Name_} телепортировался`, particle.ControlPoints.get(0))
+		console.log(2)
 		const obj = TeleportHeroes.find(item => item.hero.Name === ent.Name)
 		if (!obj) {
 			return
 		}
+		console.log(3)
 		obj.positionEnd = particle.ControlPoints.get(0)
 		obj.status = true
-		console.log("visible")
 	}
 })
 
