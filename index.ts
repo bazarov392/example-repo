@@ -21,20 +21,9 @@ const ShowHeroIconOnScreen = (name: string, vecPos: Vector3) => {
 	if (!w2sPosition || !m2sPosition) {
 		return
 	}
-	RendererSDK.Image(
-		`panorama/images/heroes/icons/${name}_png.vtex_c`,
-		w2sPosition,
-		-1,
-		new Vector2(35, 35),
-		Color.White
-	)
-	RendererSDK.Image(
-		`panorama/images/heroes/icons/${name}_png.vtex_c`,
-		m2sPosition,
-		-1,
-		new Vector2(25, 25),
-		Color.White
-	)
+	const pathToIcon = `panorama/images/heroes/icons/${name}_png.vtex_c`
+	RendererSDK.Image(pathToIcon, w2sPosition, -1, new Vector2(35, 35), Color.White)
+	RendererSDK.Image(pathToIcon, m2sPosition, -1, new Vector2(25, 25), Color.White)
 }
 
 EventsSDK.on("EntityCreated", ent => {
@@ -46,6 +35,11 @@ EventsSDK.on("EntityCreated", ent => {
 		})
 	}
 })
+
+EventsSDK.on("GameEnded", () => {
+	TeleportHeroes.clear()
+})
+
 EventsSDK.on("Draw", () => {
 	TeleportHeroes.forEach(item => {
 		if (item.positionEnd !== undefined) {
