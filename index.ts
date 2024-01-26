@@ -32,14 +32,14 @@ EventsSDK.on("EntityCreated", ent => {
 	}
 })
 EventsSDK.on("Draw", () => {
-	for (const item of TeleportHeroes) {
+	TeleportHeroes.forEach(item => {
 		if (item.positionEnd !== undefined) {
 			ShowHeroIconOnScreen(item.heroName, item.positionEnd)
 		}
 		if (item.positionStart !== undefined) {
 			ShowHeroIconOnScreen(item.heroName, item.positionStart)
 		}
-	}
+	})
 })
 
 EventsSDK.on("ParticleUpdated", particle => {
