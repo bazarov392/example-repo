@@ -17,8 +17,8 @@ const ShowHeroIconOnScreen = (name: string, vecPos: Vector3) => {
 		`panorama/images/heroes/icons/${name}_png.vtex_c`,
 		w2sPosition,
 		-1,
-		new Vector2(50, 50),
-		Color.Red
+		new Vector2(35, 35),
+		Color.White.SetA(132)
 	)
 }
 
