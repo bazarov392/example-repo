@@ -44,7 +44,7 @@ EventsSDK.on("Draw", () => {
 	}
 })
 
-EventsSDK.on("ParticleCreated", particle => {
+EventsSDK.on("ParticleUpdated", particle => {
 	if (particle.Path !== "particles/items2_fx/teleport_end.vpcf") {
 		return
 	}
