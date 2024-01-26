@@ -58,9 +58,7 @@ EventsSDK.on("ParticleUpdated", particle => {
 			return
 		}
 
-		return type
-			? (obj.positionStart = particle.ControlPoints.get(0))
-			: (obj.positionEnd = particle.ControlPoints.get(0))
+		return (obj[type ? "positionStart" : "positionEnd"] = particle.ControlPoints.get(0))
 	}
 })
 
@@ -74,12 +72,12 @@ EventsSDK.on("ParticleDestroyed", particle => {
 		return
 	}
 	const ent = particle.ModifiersAttachedTo
-	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
+	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy()) {
 		const obj = TeleportHeroes.find(item => item.heroName === ent.Name)
 		if (!obj) {
 			return
 		}
 
-		return type ? (obj.positionStart = undefined) : (obj.positionEnd = undefined)
+		return (obj[type ? "positionStart" : "positionEnd"] = undefined)
 	}
 })
