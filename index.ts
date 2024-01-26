@@ -1,36 +1,73 @@
-import { Color, EventsSDK, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
-import { Paths } from "github.com/octarine-public/wrapper/wrapper/Data/ImageData"
+import { EventsSDK, Hero, RendererSDK, Unit, Vector2, Vector3 } from "github.com/octarine-public/wrapper/index"
 
-const PathParticleTeleport = "particles/items2_fx/teleport_end.vpcf"
-EventsSDK.on("GameStarted", () => {
-	console.log()
+type TeleportHeroObjectTrue = {
+	hero: Hero
+	positionStart: Vector3
+	positionEnd: Vector3
+	status: true
+}
+
+type TeleportHeroObjectFalse = {
+	hero: Hero
+	positionStart: undefined
+	positionEnd: undefined
+	status: false
+}
+
+const TeleportHeroes: (TeleportHeroObjectFalse | TeleportHeroObjectTrue)[] = []
+
+EventsSDK.on("EntityCreated", ent => {
+	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy()) {
+		TeleportHeroes.push({
+			hero: ent as Hero,
+			positionStart: undefined,
+			positionEnd: undefined,
+			status: false
+		})
+	}
 })
-// EventsSDK.on("LinearProjectileCreated", tile => console.log("LinearProjectileCreated", tile))
-
-// EventsSDK.on("TrackingProjectileCreated", tile => console.log("TrackingProjectileCreated", tile))
-
-// EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectileUpdated", tile))
-
 EventsSDK.on("Draw", () => {
-	const w2sPosition = RendererSDK.WorldToScreen(new Vector3(-1194, -861, 128))
-	if (!w2sPosition) {
+	for (const item of TeleportHeroes) {
+		if (item.status) {
+			const w2sPosition = RendererSDK.WorldToScreen(item.positionEnd)
+			if (!w2sPosition) {
+				continue
+			}
+			RendererSDK.Image(
+				`panorama/images/heroes/icons/${item.hero.Name}_png.vtex_c`,
+				w2sPosition,
+				-1,
+				new Vector2(20, 20)
+			)
+		}
+	}
+})
+
+EventsSDK.on("ParticleCreated", particle => {
+	if (particle.Path !== "particles/items2_fx/teleport_end.vpcf") {
 		return
 	}
-	// const w2sPosition = RendererSDK.WorldToScreen(new Vector2(-1194, -861))
-	// if (!w2sPosition) {
-	// 	return
-	// }
-	// const position = w2sPosition.Subtract(new Vector2(-1194, -861).DivideScalar(2))
 
-	RendererSDK.Image(Paths.Icons.icon_svg_creep, w2sPosition, -1, new Vector2(20, 20), Color.White)
+	const ent = particle.ModifiersAttachedTo
+	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
+		// console.log(`${ent.Name_} телепортировался`, particle.ControlPoints.get(0))
+		const obj = TeleportHeroes.find(item => item.hero.Name === ent.Name)
+		if (!obj) {
+			return
+		}
+		obj.positionEnd = particle.ControlPoints.get(0)
+		obj.status = true
+	}
 })
 
 EventsSDK.on("ParticleDestroyed", particle => {
-	if (particle.Path !== PathParticleTeleport) {
-		return
-	}
 	const ent = particle.ModifiersAttachedTo
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
-		console.log(`${ent.Name_} телепортировался`, particle.ControlPoints.get(0))
+		const obj = TeleportHeroes.find(item => item.hero.Name === ent.Name)
+		if (!obj) {
+			return
+		}
+		obj.status = false
+		obj.positionEnd = undefined
 	}
 })
