@@ -1,15 +1,6 @@
-import { EventsSDK, item_tpscroll, Unit } from "github.com/octarine-public/wrapper/index"
+import { EventsSDK, Unit } from "github.com/octarine-public/wrapper/index"
 
-const enemyHeroesInfo: {
-	[key: string]: {
-		tpCooldown: number
-		lastPosition: {
-			x: number
-			y: number
-		}
-		visible: boolean
-	}
-} = {}
+const PathParticleTeleport = "particles/items2_fx/teleport_start.vpcf"
 
 EventsSDK.on("GameStarted", () => {
 	console.log()
@@ -20,48 +11,12 @@ EventsSDK.on("GameStarted", () => {
 
 // EventsSDK.on("TrackingProjectileUpdated", tile => console.log("TrackingProjectileUpdated", tile))
 
-EventsSDK.on("EntityCreated", ent => {
-	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy()) {
-		if (!(ent.Name_ in enemyHeroesInfo)) {
-			enemyHeroesInfo[ent.Name_] = {
-				tpCooldown: 0,
-				lastPosition: {
-					x: ent.Position.x,
-					y: ent.Position.y
-				},
-				visible: ent.IsVisible
-			}
-		}
+EventsSDK.on("ParticleDestroyed", particle => {
+	if (particle.Path !== PathParticleTeleport) {
+		return
+	}
+	const ent = particle.ModifiersAttachedTo
+	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
+		console.log(`${ent.Name_} телепортируется`, particle.ControlPoints.get(0))
 	}
 })
-// EventsSDK.on("PreEntityCreated", ent => console.log("PreEntityCreated", ent))
-
-// EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
-
-// EventsSDK.on("UnitAnimation", npc => console.log("UnitAnimation", npc))
-// EventsSDK.on("UnitAnimationEnd", npc => console.log("UnitAnimationEnd", npc))
-
-EventsSDK.on("AbilityCooldownChanged", abil => {
-	if (!(abil instanceof item_tpscroll)) {
-		return
-	}
-
-	const hero = abil.OwnerEntity
-	if (!hero) {
-		return
-	}
-
-	if (!(hero instanceof Unit) || !hero.IsHero || !(hero.Name_ in enemyHeroesInfo)) {
-		return
-	}
-
-	console.log("cooldown", abil.Cooldown)
-})
-
-// EventsSDK.on("AbilityCooldownChanged", a => {
-// 	const hero = LocalPlayer?.Hero
-// 	if (!hero) {
-// 		return
-// 	}
-// 	console.log("A", a.Distance2D(hero))
-// })
