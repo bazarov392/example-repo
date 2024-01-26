@@ -27,7 +27,6 @@ EventsSDK.on("EntityCreated", ent => {
 	}
 })
 EventsSDK.on("Draw", () => {
-	console.log(TeleportHeroes)
 	for (const item of TeleportHeroes) {
 		if (item.status) {
 			const w2sPosition = RendererSDK.WorldToScreen(item.positionEnd)
@@ -58,10 +57,14 @@ EventsSDK.on("ParticleCreated", particle => {
 		}
 		obj.positionEnd = particle.ControlPoints.get(0)
 		obj.status = true
+		console.log("visible")
 	}
 })
 
 EventsSDK.on("ParticleDestroyed", particle => {
+	if (particle.Path !== "particles/items2_fx/teleport_end.vpcf") {
+		return
+	}
 	const ent = particle.ModifiersAttachedTo
 	if (ent instanceof Unit && ent.IsHero && ent.IsEnemy() && particle.ControlPoints.has(0)) {
 		const obj = TeleportHeroes.find(item => item.hero.Name === ent.Name)
