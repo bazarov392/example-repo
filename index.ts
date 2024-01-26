@@ -18,7 +18,7 @@ const ShowHeroIconOnScreen = (name: string, vecPos: Vector3) => {
 		w2sPosition,
 		-1,
 		new Vector2(35, 35),
-		Color.White.SetA(200)
+		Color.White.SetA(50)
 	)
 }
 
