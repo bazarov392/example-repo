@@ -34,12 +34,12 @@ EventsSDK.on("EntityCreated", ent => {
 		}
 	}
 })
-EventsSDK.on("PreEntityCreated", ent => console.log("PreEntityCreated", ent))
+// EventsSDK.on("PreEntityCreated", ent => console.log("PreEntityCreated", ent))
 
-EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
+// EventsSDK.on("EntityVisibleChanged", ent => console.log("EntityVisibleChanged", ent))
 
-EventsSDK.on("UnitAnimation", npc => console.log("UnitAnimation", npc))
-EventsSDK.on("UnitAnimationEnd", npc => console.log("UnitAnimationEnd", npc))
+// EventsSDK.on("UnitAnimation", npc => console.log("UnitAnimation", npc))
+// EventsSDK.on("UnitAnimationEnd", npc => console.log("UnitAnimationEnd", npc))
 
 EventsSDK.on("AbilityCooldownChanged", abil => {
 	if (!(abil instanceof item_tpscroll)) {
@@ -51,11 +51,11 @@ EventsSDK.on("AbilityCooldownChanged", abil => {
 		return
 	}
 
-	if (!(hero instanceof Unit) || !hero.IsHero || !hero.IsEnemy() || !(hero.Name_ in enemyHeroesInfo)) {
+	if (!(hero instanceof Unit) || !hero.IsHero || !(hero.Name_ in enemyHeroesInfo)) {
 		return
 	}
 
-	console.log("abil", abil)
+	console.log("cooldown", abil.Cooldown)
 })
 
 // EventsSDK.on("AbilityCooldownChanged", a => {
